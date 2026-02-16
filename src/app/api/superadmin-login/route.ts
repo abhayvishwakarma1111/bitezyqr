@@ -11,10 +11,10 @@ export async function POST(req: Request) {
 
     response.cookies.set('superadmin_session', 'valid', {
         httpOnly: true,
-        secure: true,
+        secure: process.env.NODE_ENV === 'production', 
         sameSite: 'strict',
         path: '/',
-    })
+    }) 
 
     return response
 }

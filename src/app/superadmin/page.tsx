@@ -12,9 +12,16 @@ export default function SuperAdmin() {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const res = await fetch('/api/check-superadmin')
-      if (res.ok) {
-        setAuthorized(true)
+      try {
+        const res = await fetch('/api/check-superadmin')
+        if (res.ok) {
+          setAuthorized(true)
+        } else {
+          // This triggers the login screen to show
+          setAuthorized(false)
+        }
+      } catch (err) {
+        setAuthorized(false)
       }
     }
 
