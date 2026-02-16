@@ -11,7 +11,7 @@ export async function POST(req: Request) {
 
     response.cookies.set('superadmin_session', 'valid', {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: true,
         sameSite: 'strict',
         path: '/',
     })
