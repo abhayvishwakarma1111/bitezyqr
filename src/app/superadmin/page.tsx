@@ -60,7 +60,13 @@ export default function SuperAdmin() {
     line2: '',
     line3: '',
     line4: '',
-    line5: ''
+    line5: '',
+     tax_enabled: false,
+    tax_type: '',
+    tax_percentage: 0,
+
+    packaging_enabled: false,
+    packaging_charge: 0
   })
 
   const fetchRestaurants = async () => {
@@ -126,7 +132,12 @@ export default function SuperAdmin() {
       line2: '',
       line3: '',
       line4: '',
-      line5: ''
+      line5: '',
+      tax_enabled: false,
+      tax_type: '',
+      tax_percentage: 0,
+      packaging_enabled: false,
+      packaging_charge: 0
     })
 
     fetchRestaurants()
@@ -344,6 +355,95 @@ export default function SuperAdmin() {
             }
             className="border border-gray-300 p-3 rounded-xl w-full bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#ff5a1f]"
           />
+
+          <hr className="my-6" />
+
+          <h3 className="text-lg font-semibold text-gray-900">
+            Tax Settings
+          </h3>
+
+          <label className="flex items-center gap-3 mt-3 text-gray-900">
+            <input
+              type="checkbox"
+              checked={newRestaurant.tax_enabled}
+              onChange={(e) =>
+                setNewRestaurant({
+                  ...newRestaurant,
+                  tax_enabled: e.target.checked
+                })
+              }
+            />
+            Enable Tax
+          </label>
+
+          {newRestaurant.tax_enabled && (
+            <>
+              <select
+                value={newRestaurant.tax_type}
+                onChange={(e) =>
+                  setNewRestaurant({
+                    ...newRestaurant,
+                    tax_type: e.target.value
+                  })
+                }
+                className="border border-gray-300 p-3 rounded-xl w-full mt-3 text-gray-900"
+              >
+                <option value="">Select Tax Type</option>
+                <option value="exclusive">Exclusive</option>
+                <option value="inclusive">Inclusive</option>
+              </select>
+
+              <input
+                type="number"
+                placeholder="Tax Percentage (e.g. 5)"
+                value={newRestaurant.tax_percentage}
+                onChange={(e) =>
+                  setNewRestaurant({
+                    ...newRestaurant,
+                    tax_percentage: Number(e.target.value)
+                  })
+                }
+                className="border border-gray-300 p-3 rounded-xl w-full mt-3 text-gray-900"
+              />
+            </>
+          )}
+
+          <hr className="my-6" />
+
+          <h3 className="text-lg font-semibold text-gray-900">
+            Packaging Settings
+          </h3>
+
+          <label className="flex items-center gap-3 mt-3">
+            <input
+              type="checkbox"
+              checked={newRestaurant.packaging_enabled}
+              onChange={(e) =>
+                setNewRestaurant({
+                  ...newRestaurant,
+                  packaging_enabled: e.target.checked
+                })
+              }
+            />
+            Enable Packaging Charge
+          </label>
+
+          {newRestaurant.packaging_enabled && (
+            <input
+              type="number"
+              placeholder="Packaging Charge (₹)"
+              value={newRestaurant.packaging_charge}
+              onChange={(e) =>
+                setNewRestaurant({
+                  ...newRestaurant,
+                  packaging_charge: Number(e.target.value)
+                })
+              }
+              className="border border-gray-300 p-3 rounded-xl w-full mt-3 text-gray-900"
+            />
+          )}
+
+
 
 
           <button

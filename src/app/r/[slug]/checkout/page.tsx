@@ -21,6 +21,15 @@ export default function CheckoutPage() {
   const [note, setNote] = useState("");
   const [loading, setLoading] = useState(false);
   const [paymentProcessing, setPaymentProcessing] = useState(false)
+  const [breakdown, setBreakdown] = useState<any>(null)
+
+  const [taxEnabled, setTaxEnabled] = useState(false)
+  const [taxType, setTaxType] = useState<string | null>(null)
+  const [taxPercentage, setTaxPercentage] = useState(0)
+  const [packagingEnabled, setPackagingEnabled] = useState(false)
+  const [packagingChargeValue, setPackagingChargeValue] = useState(0)
+
+
 
   
 
@@ -37,12 +46,25 @@ export default function CheckoutPage() {
     const fetchRestaurant = async () => {
       const { data } = await supabase
         .from("restaurants")
-        .select("name")
+        .select(`
+  name,
+  tax_enabled,
+  tax_type,
+  tax_percentage,
+  packaging_enabled,
+  packaging_charge
+`)
         .eq("id", restaurantId)
         .single();
 
       if (data) {
         setRestaurantName(data.name);
+        setTaxEnabled(data.tax_enabled)
+        setTaxType(data.tax_type)
+        setTaxPercentage(data.tax_percentage || 0)
+        setPackagingEnabled(data.packaging_enabled)
+        setPackagingChargeValue(data.packaging_charge || 0)
+
       }
     };
 
@@ -108,10 +130,37 @@ export default function CheckoutPage() {
 
   const addonItems = menu.filter((item) => item.is_addon);
 
-  const totalAmount = menu.reduce((total, item) => {
+  const foodSubtotal = menu.reduce((total, item) => {
     const qty = cart[item.id] || 0;
     return total + qty * item.price;
   }, 0);
+
+  let displaySubtotal = foodSubtotal
+  let displayTax = 0
+  let totalAfterTax = foodSubtotal
+
+  if (taxEnabled && taxPercentage > 0) {
+    if (taxType === "exclusive") {
+      displayTax = foodSubtotal * (taxPercentage / 100)
+      totalAfterTax = foodSubtotal + displayTax
+    }
+
+    if (taxType === "inclusive") {
+      const basePrice = foodSubtotal / (1 + taxPercentage / 100)
+      displayTax = foodSubtotal - basePrice
+      displaySubtotal = basePrice
+      totalAfterTax = foodSubtotal
+    }
+  }
+
+  let displayPackaging = 0
+
+  if (packagingEnabled && packaging) {
+    displayPackaging = packagingChargeValue
+  }
+
+  const finalDisplayTotal = totalAfterTax + displayPackaging
+
 
   const handlePlaceOrder = async () => {
     if (!restaurantId) return;
@@ -122,7 +171,7 @@ export default function CheckoutPage() {
       return;
     }
 
-    if (totalAmount === 0) {
+    if (finalDisplayTotal === 0) {
       alert("Cart is empty");
       return;
     }
@@ -144,6 +193,8 @@ export default function CheckoutPage() {
       });
 
       const data = await response.json();
+      setBreakdown(data)
+
       console.log("Razorpay API response:", data);
 
       const options = {
@@ -308,11 +359,34 @@ export default function CheckoutPage() {
         </div>
       )}
 
-      {/* Total Section */}
-      <div className="bg-white rounded-2xl p-4 shadow-sm flex justify-between items-center">
-        <span className="font-bold text-lg text-gray-900">Total</span>
-        <span className="font-bold text-xl text-gray-900">₹{totalAmount}</span>
+      <div className="bg-white rounded-2xl p-4 shadow-sm mb-4">
+        <div className="flex justify-between text-gray-800">
+          <span>Subtotal</span>
+          <span>₹{displaySubtotal.toFixed(2)}</span>
+        </div>
+
+        {displayTax > 0 && (
+          <div className="flex justify-between text-gray-800">
+            <span>GST ({taxPercentage}%)</span>
+            <span>₹{displayTax.toFixed(2)}</span>
+          </div>
+        )}
+
+        {displayPackaging > 0 && (
+          <div className="flex justify-between text-gray-800">
+            <span>Packaging</span>
+            <span>₹{displayPackaging.toFixed(2)}</span>
+          </div>
+        )}
+
+        <hr className="my-2" />
+
+        <div className="flex justify-between font-bold text-lg text-gray-900">
+          <span>Total</span>
+          <span>₹{finalDisplayTotal.toFixed(2)}</span>
+        </div>
       </div>
+
 
       {/* Fixed Bottom Pay Button */}
       <div className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 p-4">
@@ -322,7 +396,8 @@ export default function CheckoutPage() {
             disabled={loading}
             className="w-full bg-[#ff5a1f] text-white py-4 rounded-2xl font-semibold text-lg shadow-md"
           >
-            {loading ? "Placing Order..." : `Proceed to Pay ₹${totalAmount}`}
+            {loading ? "Placing Order..." : `Proceed to Pay ₹${finalDisplayTotal.toFixed(2)}
+`}
           </button>
         </div>
       </div>

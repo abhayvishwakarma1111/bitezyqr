@@ -19,7 +19,15 @@ export async function POST(req: Request) {
     // 1️⃣ Fetch restaurant Razorpay keys
     const { data: restaurant, error: restaurantError } = await supabase
       .from('restaurants')
-      .select('razorpay_key_id, razorpay_key_secret')
+      .select(`
+  razorpay_key_id,
+  razorpay_key_secret,
+  tax_enabled,
+  tax_type,
+  tax_percentage,
+  packaging_enabled,
+  packaging_charge
+`)
       .eq('id', restaurant_id)
       .single()
 
@@ -39,16 +47,48 @@ export async function POST(req: Request) {
     }
 
     // 3️⃣ Calculate total securely on server
-    let calculatedTotal = 0
+    // 3️⃣ Calculate food subtotal
+    let subtotal = 0
 
     for (const item of menuItems) {
       const quantity = cart[item.id]
-      calculatedTotal += item.price * quantity
+      subtotal += item.price * quantity
     }
 
-    if (calculatedTotal <= 0) {
+    if (subtotal <= 0) {
       return NextResponse.json({ error: 'Invalid total amount' }, { status: 400 })
     }
+
+    // 4️⃣ Apply tax (on food only)
+    let taxAmount = 0
+    let totalAfterTax = subtotal
+
+    if (restaurant.tax_enabled && restaurant.tax_percentage > 0) {
+      const percentage = restaurant.tax_percentage
+
+      if (restaurant.tax_type === 'exclusive') {
+        taxAmount = subtotal * (percentage / 100)
+        totalAfterTax = subtotal + taxAmount
+      }
+
+      if (restaurant.tax_type === 'inclusive') {
+        const basePrice = subtotal / (1 + percentage / 100)
+        taxAmount = subtotal - basePrice
+        totalAfterTax = subtotal
+      }
+    }
+
+    // 5️⃣ Apply packaging (after tax)
+    let packagingCharge = 0
+
+    if (
+      restaurant.packaging_enabled &&
+      packaging_required
+    ) {
+      packagingCharge = restaurant.packaging_charge || 0
+    }
+
+    const finalTotal = totalAfterTax + packagingCharge
 
     // 4️⃣ Generate token number
     const { data: tokenData, error: tokenError } = await supabase
@@ -72,9 +112,15 @@ export async function POST(req: Request) {
           token_number: tokenNumber,
           packaging_required,
           chef_note,
-          total_amount: calculatedTotal,
+          subtotal,
+          tax_amount: taxAmount,
+          tax_percentage: restaurant.tax_percentage || 0,
+          tax_type: restaurant.tax_type || null,
+          packaging_charge: packagingCharge,
+          total_amount: finalTotal,
           cart,
-          amount: calculatedTotal,
+          amount: finalTotal,
+
           payment_status: 'CREATED',
           status: null
         }
@@ -93,7 +139,7 @@ export async function POST(req: Request) {
     })
 
     const razorpayOrder = await razorpay.orders.create({
-      amount: calculatedTotal * 100,
+      amount: Math.round(finalTotal * 100),
       currency: 'INR',
       receipt: order.id
     })
@@ -108,8 +154,15 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
       razorpayOrderId: razorpayOrder.id,
-      razorpayKeyId: restaurant.razorpay_key_id
+      razorpayKeyId: restaurant.razorpay_key_id,
+      subtotal,
+      taxAmount,
+      packagingCharge,
+      finalTotal,
+      taxType: restaurant.tax_type,
+      taxPercentage: restaurant.tax_percentage
     })
+
 
   } catch (err) {
     console.error(err)
