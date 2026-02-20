@@ -1,6 +1,42 @@
+'use client';
+import Image from "next/image";
+
 export default function HomePage() {
   return (
-    <main className="bg-white text-gray-900">
+    <main className="bg-white text-gray-900 pt-24">
+
+      {/* STICKY HEADER */}
+      <header className="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-gray-200">
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+
+          {/* LOGO */}
+          <Image src="/Bitezy Logo.png" alt="Bitezy Logo" width={150} height={50} className="object-contain"/>
+
+          {/* NAVIGATION */}
+          <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-600">
+            <a href="#features" className="hover:text-black transition">
+              Features
+            </a>
+            <a href="#pricing" className="hover:text-black transition">
+              Pricing
+            </a>
+            <a href="#contact" className="hover:text-black transition">
+              Contact
+            </a>
+          </nav>
+
+          {/* DASHBOARD LOGIN BUTTON */}
+          <a
+            href="/dashboard-login"
+            className="px-5 py-2 rounded-full bg-black text-white text-sm font-medium hover:bg-gray-800 transition duration-300"
+          >
+            Dashboard Login
+          </a>
+
+        </div>
+      </header>
+
+
 
       {/* HERO SECTION */}
       <section className="min-h-screen flex flex-col justify-center items-center text-center px-6 bg-gradient-to-br from-green-50 to-white">
@@ -30,68 +66,97 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* APPLE STYLE PRODUCT SHOWCASE */}
-      <section className="py-32 px-6 bg-white text-center">
+      {/* PREMIUM PRODUCT STORY SECTION */}
+      <section className="py-32 bg-white text-center">
 
-        {/* SECTION 1 – ADMIN DASHBOARD */}
+        {/* ================= ADMIN ================= */}
         <div className="max-w-6xl mx-auto mb-40">
           <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-6">
-            Total Control.
+            Designed For Owners.
           </h2>
 
-          <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-16">
-            Real-time revenue. Live orders. Smart insights.
-            Everything your restaurant needs — in one powerful dashboard.
+          <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-20">
+            Track revenue, monitor orders and understand your business like never before.
           </p>
 
+          {/* Dashboard Overview */}
+          <div className="rounded-3xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.15)] border border-gray-200 mb-16">
+            <img
+              src="/mockups/admin-overview.png"
+              alt="Admin Dashboard Overview"
+              className="w-full"
+            />
+          </div>
+
+          {/* Graphs View */}
           <div className="rounded-3xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.15)] border border-gray-200">
             <img
-              src="/admin-dashboard.png"
-              alt="Admin Dashboard"
-              className="w-full object-cover"
+              src="/mockups/admin-analytics.png"
+              alt="Admin Analytics"
+              className="w-full"
             />
           </div>
         </div>
 
-        {/* SECTION 2 – CUSTOMER EXPERIENCE */}
+        {/* ================= KITCHEN ================= */}
         <div className="max-w-6xl mx-auto mb-40">
           <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-6">
-            Effortless Ordering.
+            Built For Kitchens.
           </h2>
 
-          <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-16">
-            Customers scan. Order. Pay.
-            No waiting. No confusion. Just smooth experience.
+          <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-20">
+            Real-time order flow that keeps your staff focused and efficient.
           </p>
 
-          <div className="flex justify-center">
-            <div className="w-72 rounded-[50px] border-[10px] border-black shadow-[0_30px_80px_rgba(0,0,0,0.25)] overflow-hidden">
-              <img
-                src="/customer-menu.png"
-                alt="Customer Menu"
-                className="w-full"
-              />
-            </div>
+          {/* Active Orders */}
+          <div className="rounded-3xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.15)] border border-gray-200 mb-16 max-w-4xl mx-auto">
+            <img
+              src="/mockups/kitchen-active.png"
+              alt="Kitchen Active Orders"
+              className="w-full"
+            />
+          </div>
+
+          {/* Empty State */}
+          <div className="rounded-3xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.15)] border border-gray-200 max-w-4xl mx-auto">
+            <img
+              src="/mockups/kitchen-empty.png"
+              alt="Kitchen Empty Dashboard"
+              className="w-full"
+            />
           </div>
         </div>
 
-        {/* SECTION 3 – KITCHEN DASHBOARD */}
+        {/* ================= CUSTOMER ================= */}
         <div className="max-w-6xl mx-auto">
           <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-6">
-            Kitchen, Simplified.
+            Loved By Customers.
           </h2>
 
-          <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-16">
-            Accept. Prepare. Ready. Picked up.
-            A seamless workflow that keeps your kitchen in sync.
+          <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-20">
+            Smooth QR ordering experience from landing page to order pickup.
           </p>
 
-          <div className="rounded-3xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.15)] border border-gray-200 max-w-4xl mx-auto">
-            <img
-              src="/kitchen-dashboard.png"
-              alt="Kitchen Dashboard"
-              className="w-full object-cover"
-            />
+          <div className="flex gap-10 justify-center overflow-x-auto pb-6">
+
+            {[
+              "customer-landing.png",
+              "customer-menu.png",
+              "customer-checkout.png",
+              "customer-orders.png",
+            ].map((img, index) => (
+              <div
+                key={index}
+                className="min-w-[260px] rounded-[50px] border-[10px] border-black shadow-[0_30px_80px_rgba(0,0,0,0.25)] overflow-hidden"
+              >
+                <img
+                  src={`/mockups/${img}`}
+                  alt="Customer Screenshot"
+                  className="w-full"
+                />
+              </div>
+            ))}
+
           </div>
         </div>
 
@@ -100,7 +165,7 @@ export default function HomePage() {
 
 
       {/* FEATURES SECTION */}
-      <section className="py-20 bg-gray-50 px-6">
+      <section id="features" className="py-20 bg-gray-50 px-6">
         <h2 className="text-3xl font-bold text-center mb-16">
           Everything Your Restaurant Needs
         </h2>
