@@ -11,7 +11,7 @@ export default function RestaurantLanding() {
 
     const [restaurant, setRestaurant] = useState<any>(null)  // Stores the fetched restaurant details
     const [phone, setPhone] = useState('')  // Stores the user's inputted phone number
-    const [loading, setLoading] = useState(false)  
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         if (!slug) return
@@ -26,7 +26,7 @@ export default function RestaurantLanding() {
             setRestaurant(data)  // Store the fetched restaurant details in the state   
         }
 
-        fetchRestaurant()  
+        fetchRestaurant()
     }, [slug])  // This effect runs whenever the slug changes (i.e., when the component mounts or when the URL changes)
 
     const handleContinue = async () => {
@@ -41,7 +41,7 @@ export default function RestaurantLanding() {
         }
 
 
-        setLoading(true)  
+        setLoading(true)
 
         const { data: existing } = await supabase
             .from('customers')
@@ -49,7 +49,7 @@ export default function RestaurantLanding() {
             .eq('phone', phone)
             .maybeSingle()
 
-        let customerId  
+        let customerId
 
         if (existing) {
             customerId = existing.id
@@ -60,10 +60,10 @@ export default function RestaurantLanding() {
                 .select()
                 .single()
 
-            customerId = newCustomer?.id  
+            customerId = newCustomer?.id
         }
 
-        if (!customerId) { 
+        if (!customerId) {
             alert('Something went wrong. Please try again.')
             setLoading(false)
             return
@@ -78,31 +78,39 @@ export default function RestaurantLanding() {
     if (!restaurant) return <div className="p-6">Loading...</div>
 
     return (
-        <div className="min-h-screen bg-[#fff7f2] flex flex-col">
+        <div className="min-h-screen bg-gray-50 flex flex-col">
 
             {/* Top Banner */}
-            <div className="bg-gradient-to-r from-[#ff5a1f] to-[#ff8e53] h-40 rounded-b-3xl relative flex flex-col items-center pt-8 pb-6">
+            <div className="bg-gradient-to-br from-[#ff5a1f] to-[#ff8e53] pt-7 pb-20 flex flex-col items-center px-4">
 
-                <h1 className="text-3xl font-bold text-white text-center px-4 drop-shadow-md">
+                {restaurant.logo_url && (
+
+                    <div
+                        className="w-29 h-29 bg-white rounded-full shadow-xl flex items-center justify-center border-4 border-white/30 overflow-hidden">
+                        <img
+                            src={restaurant.logo_url}
+                            alt="logo"
+                            className="w-full h-full object-cover"
+                        />
+                    </div>
+                )}
+
+                <h1 className="mt-4 text-2xl font-black text-white text-center drop-shadow-md uppercase tracking-tight">
                     {restaurant.name}
                 </h1>
 
-                {restaurant.logo_url && (
-                    <img
-                        src={restaurant.logo_url}
-                        alt="logo"
-                        className="w-24 h-24 rounded-full object-cover absolute -bottom-12"
-                    />
-                )}
+
             </div>
 
+
+
             {/* Content */}
-            <div className="flex-1 flex flex-col items-center px-6 pt-11">
+            <div className="flex-1 px-5 -mt-12">
 
-                <div className="mt-10 w-full max-w-sm">
+                <div className="bg-white rounded-[2rem] shadow-xl py-8 px-5 max-w-sm mx-auto border border-gray-100">
 
-                    <label className="block text-sm font-medium text-gray-700 mb-1 px-2">
-                        Phn No.
+                    <label className="block text-xs font-bold text-gray-400 mb-2 px-1">
+                        Enter Phone Number
                     </label>
 
 
@@ -124,54 +132,61 @@ export default function RestaurantLanding() {
                     <button
                         onClick={handleContinue}
                         disabled={loading}
-                        className="w-full bg-[#ff5a1f] text-white py-4 rounded-xl font-semibold text-lg mt-3 shadow-md active:scale-95 transition"
+                        className="w-full bg-[#ff5a1f] text-white py-5 rounded-2xl font-black text-lg mt-4 shadow-lg shadow-orange-200 active:scale-95 transition-transform uppercase tracking-wider"
                     >
                         {loading ? 'Please wait...' : 'View Menu'}
                     </button>
 
+                    {restaurant.address && (
+                        <p className="text-gray-600 text-xs w-full text-center mt-5 flex flex-col items-center justify-center py-3 border border-gray-100 rounded-2xl bg-gray-50 hover:bg-white transition-colors px-2">
+                            📍{restaurant.address}
+                        </p>
+                    )}
+
+                    {restaurant.line1 && (
+                        <p className="text-gray-500 text-xs w-full text-left mt-5 py-2 border-t border-gray-100">
+                            {restaurant.line1}
+                        </p>
+                    )}
+
+                    {restaurant.line2 && (
+                        <p className="text-gray-500 text-xs w-full text-left py-2">
+                            {restaurant.line2}
+                        </p>
+                    )}
+
+                    {restaurant.line3 && (
+                        <p className="text-gray-500 text-xs w-full text-left py-2">
+                            {restaurant.line3}
+                        </p>
+                    )}
+
+                    {restaurant.line4 && (
+                        <p className="text-gray-500 text-xs w-full text-left py-2">
+                            {restaurant.line4}
+                        </p>
+                    )}
+
+                    {restaurant.line5 && (
+                        <p className="text-gray-500 text-xs w-full text-left py-2 border-b border-gray-100">
+                            {restaurant.line5}
+                        </p>
+                    )}
+
+
+
                 </div>
 
-                {restaurant.address && (
-                    <p className="text-gray-600 text-xs w-full text-left mt-11">
-                    {restaurant.address}
-                </p>
-                )}
+                
 
-                {restaurant.line1 && (
-                    <p className="text-gray-600 text-xs w-full text-left">
-                        {restaurant.line1}
-                    </p>
-                )}
+                
 
-                {restaurant.line2 && (
-                    <p className="text-gray-600 text-xs w-full text-left">
-                        {restaurant.line2}
-                    </p>
-                )}
-
-                {restaurant.line3 && (
-                    <p className="text-gray-600 text-xs w-full text-left">
-                        {restaurant.line3}
-                    </p>
-                )}
-
-                {restaurant.line4 && (
-                    <p className="text-gray-600 text-xs w-full text-left">
-                        {restaurant.line4}
-                    </p>
-                )}
-
-                {restaurant.line5 && (
-                    <p className="text-gray-600 text-xs w-full text-left">
-                        {restaurant.line5}
-                    </p>
-                )}
-
-                <p className="text-xs text-[#ff5a1f] mt-4 absolute bottom-7">
+                <p className="text-xs text-center text-[#ff5a1f] mt-15 mb-5">
                     Powered by Bitezy
                 </p>
 
             </div>
+
         </div>
     )
 
