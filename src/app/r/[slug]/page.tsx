@@ -144,7 +144,7 @@ export default function RestaurantLanding() {
                     )}
 
                     {restaurant.line1 && (
-                        <p className="text-gray-500 text-xs w-full text-left mt-5 py-2 border-t border-gray-100">
+                        <p className="text-gray-500 text-xs w-full text-left mt-5 py-2 border-t border-gray-200">
                             {restaurant.line1}
                         </p>
                     )}
@@ -168,7 +168,7 @@ export default function RestaurantLanding() {
                     )}
 
                     {restaurant.line5 && (
-                        <p className="text-gray-500 text-xs w-full text-left py-2 border-b border-gray-100">
+                        <p className="text-gray-500 text-xs w-full text-left py-2 border-b border-gray-200">
                             {restaurant.line5}
                         </p>
                     )}
