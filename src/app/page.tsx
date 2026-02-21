@@ -1,333 +1,422 @@
 'use client';
 import Image from "next/image";
+import { useState } from "react";
+
 
 export default function HomePage() {
+
+  const [restaurantName, setRestaurantName] = useState("");
+  const [ownerName, setOwnerName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
+
+
   return (
-    <main className="bg-white text-gray-900 pt-24">
+    <main className="bg-white text-gray-900 pt-20">
 
-      {/* STICKY HEADER */}
-      <header className="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-gray-200">
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+      {/* ================= HEADER ================= */}
+      <header className="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur border-b border-gray-200">
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-4 md:px-6 py-3">
 
-          {/* LOGO */}
-          <Image src="/Bitezy Logo.png" alt="Bitezy Logo" width={150} height={50} className="object-contain"/>
+          <Image
+            src="/bitezy-logo.png"
+            alt="Bitezy Logo"
+            width={120}
+            height={40}
+            priority
+          />
 
-          {/* NAVIGATION */}
           <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-600">
-            <a href="#features" className="hover:text-black transition">
-              Features
-            </a>
-            <a href="#pricing" className="hover:text-black transition">
-              Pricing
-            </a>
-            <a href="#contact" className="hover:text-black transition">
-              Contact
-            </a>
+            <a href="#features" className="hover:text-black">Features</a>
+            <a href="#pricing" className="hover:text-black">Pricing</a>
+            <a href="#faq" className="hover:text-black">FAQ</a>
           </nav>
 
-          {/* DASHBOARD LOGIN BUTTON */}
           <a
             href="/dashboard-login"
-            className="px-5 py-2 rounded-full bg-black text-white text-sm font-medium hover:bg-gray-800 transition duration-300"
+            className="px-4 py-2 rounded-full bg-black text-white text-xs md:text-sm font-medium hover:bg-gray-800 transition"
           >
             Dashboard Login
           </a>
-
         </div>
       </header>
 
 
+      {/* ================= HERO ================= */}
+      <section className="min-h-[90vh] flex flex-col justify-center items-center text-center px-4 bg-gradient-to-br from-green-50 to-white">
 
-      {/* HERO SECTION */}
-      <section className="min-h-screen flex flex-col justify-center items-center text-center px-6 bg-gradient-to-br from-green-50 to-white">
-        <h1 className="text-4xl md:text-6xl font-bold leading-tight max-w-4xl">
-          Make Your Restaurant <span className="text-green-600">Smart</span> With Bitezy
+        <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold leading-tight max-w-4xl">
+          Increase Revenue & Speed Up Service —
+          <span className="text-green-600"> Without Paying Commission</span>
         </h1>
 
-        <p className="mt-6 text-lg md:text-xl text-gray-600 max-w-2xl">
-          QR based ordering, live kitchen dashboard, powerful analytics and zero commission.
-          Digitize operations. Increase revenue. Reduce chaos.
+        <p className="mt-6 text-base md:text-xl text-gray-600 max-w-2xl">
+          Smart QR ordering system with live kitchen dashboard and real-time analytics.
+          Built for modern restaurants.
         </p>
 
-        <div className="mt-8 flex gap-4">
-          <a
-            href="#pricing"
-            className="bg-green-600 text-white px-8 py-3 rounded-xl text-lg font-semibold hover:bg-green-700 transition"
-          >
-            View Pricing
-          </a>
-
+        <div className="mt-8 flex flex-col sm:flex-row gap-4">
           <a
             href="#contact"
-            className="border border-gray-300 px-8 py-3 rounded-xl text-lg font-semibold hover:bg-gray-100 transition"
+            className="bg-green-600 text-white px-6 md:px-8 py-3 rounded-xl font-semibold hover:bg-green-700 transition"
           >
-            Talk To Us
+            Inquire
+          </a>
+
+          <a
+            href="#features"
+            className="border border-gray-300 px-6 md:px-8 py-3 rounded-xl font-semibold hover:bg-gray-100 transition"
+          >
+            Explore Features
           </a>
         </div>
+
+        <p className="mt-6 text-sm text-gray-500">
+          Trusted by growing restaurants in all over India
+        </p>
       </section>
 
-      {/* PREMIUM PRODUCT STORY SECTION */}
-      <section className="py-32 bg-white text-center">
+      {/* ================= PRODUCT SHOWCASE ================= */}
+      <section className="py-24 bg-white px-6">
 
-        {/* ================= ADMIN ================= */}
-        <div className="max-w-6xl mx-auto mb-40">
-          <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-6">
-            Designed For Owners.
-          </h2>
+        <div className="max-w-7xl mx-auto space-y-24">
 
-          <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-20">
-            Track revenue, monitor orders and understand your business like never before.
-          </p>
+          {/* ADMIN DASHBOARD */}
+          <div className="grid md:grid-cols-2 gap-12 items-center">
 
-          <div className="rounded-3xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.15)] border border-gray-200 mb-16">
-            <img
-              src="/mockups/security.png"
-              alt="Admin Dashboard Overview"
-              className="w-full"
-            />
-          </div>
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                Powerful Admin Dashboard
+              </h2>
+              <p className="text-gray-600 mb-6">
+                Track revenue, monitor orders and analyze peak hours with detailed insights.
+              </p>
+              <ul className="text-gray-600 space-y-2 text-sm">
+                <li>✔ Total revenue tracking</li>
+                <li>✔ Track best selling items</li>
+                <li>✔ Sales graphs & reports</li>
+                <li>✔ Downloadable Excel reports</li>
+                <li>✔ Peak hour analysis</li>
+              </ul>
+            </div>
 
-          {/* Dashboard Overview */}
-          <div className="rounded-3xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.15)] border border-gray-200 mb-16">
-            <img
-              src="/mockups/admin1.png"
-              alt="Admin Dashboard Overview"
-              className="w-full"
-            />
-          </div>
-
-          {/* Graphs View */}
-          <div className="rounded-3xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.15)] border border-gray-200">
-            <img
-              src="/mockups/admin2.png"
-              alt="Admin Analytics"
-              className="w-full"
-            />
-          </div>
-
-          <div className="rounded-3xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.15)] border border-gray-200">
-            <img
-              src="/mockups/admin2mm.png"
-              alt="Admin Analytics"
-              className="w-full"
-            />
-          </div>
-
-        </div>
-
-        {/* ================= KITCHEN ================= */}
-        <div className="max-w-6xl mx-auto mb-40">
-          <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-6">
-            Built For Kitchens.
-          </h2>
-
-          <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-20">
-            Real-time order flow that keeps your staff focused and efficient.
-          </p>
-
-          {/* Active Orders */}
-          <div className="rounded-3xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.15)] border border-gray-200 mb-16 max-w-4xl mx-auto">
-            <img
-              src="/mockups/kitchen1.png"
-              alt="Kitchen Active Orders"
-              className="w-full"
-            />
-          </div>
-
-          {/* Empty State */}
-          <div className="rounded-3xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.15)] border border-gray-200 max-w-4xl mx-auto">
-            <img
-              src="/mockups/kitchen2.png"
-              alt="Kitchen Empty Dashboard"
-              className="w-full"
-            />
-          </div>
-        </div>
-
-        {/* ================= CUSTOMER ================= */}
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-6">
-            Loved By Customers.
-          </h2>
-
-          <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-20">
-            Smooth QR ordering experience from landing page to order pickup.
-          </p>
-
-          <div className="flex gap-10 justify-center pb-6">
-
-            {[
-              "csx1.jpeg",
-              "csx2.jpeg",
-              "csx3.jpeg",
-              "csx3.1.jpeg",
-              "csx4.jpeg",
-            ].map((img, index) => (
-              <div
-                key={index}
-                className="min-w-[260px] rounded-[50px] border-[10px] border-black shadow-[0_30px_80px_rgba(0,0,0,0.25)] overflow-hidden"
-              >
-                <img
-                  src={`/mockups/${img}`}
-                  alt="Customer Screenshot"
-                  className="w-full"
-                />
-              </div>
-            ))}
+            <div className="rounded-3xl overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.15)] border border-gray-200">
+              <Image
+                src="/mockups/admin1.png"
+                alt="Admin Dashboard"
+                width={1200}
+                height={800}
+                className="w-full h-auto"
+              />
+            </div>
 
           </div>
+
+
+          {/* KITCHEN DASHBOARD */}
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+
+            <div className="order-2 md:order-1 rounded-3xl overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.15)] border border-gray-200">
+              <Image
+                src="/mockups/kitchen1.png"
+                alt="Kitchen Dashboard"
+                width={1200}
+                height={800}
+                className="w-full h-auto"
+              />
+            </div>
+
+            <div className="order-1 md:order-2">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                Real-Time Kitchen Flow
+              </h2>
+              <p className="text-gray-600 mb-6">
+                Orders appear instantly with sound alerts and preparation status tracking.
+              </p>
+              <ul className="text-gray-600 space-y-2 text-sm">
+                <li>✔ Accept → Preparing → Ready</li>
+                <li>✔ Order timer tracking</li>
+                <li>✔ Token verification system</li>
+                <li>✔ Automatic archive system</li>
+              </ul>
+            </div>
+
+          </div>
+
+
+          {/* CUSTOMER EXPERIENCE */}
+          <div>
+
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Seamless Customer Experience
+              </h2>
+              <p className="text-gray-600 max-w-2xl mx-auto">
+                From scanning QR to order pickup — smooth and intuitive journey.
+              </p>
+            </div>
+
+            <div className="flex gap-6 overflow-x-auto pb-6">
+
+              {["csx1.jpeg", "csx2.jpeg", "csx3.jpeg", "csx3-1.jpeg", "csx4.jpeg"].map((img, index) => (
+                <div
+                  key={index}
+                  className="min-w-[220px] md:min-w-[260px] rounded-[40px] border-[8px] md:border-[10px] border-black shadow-[0_20px_50px_rgba(0,0,0,0.25)] overflow-hidden"
+                >
+                  <Image
+                    src={`/mockups/${img}`}
+                    alt="Customer Experience"
+                    width={300}
+                    height={600}
+                    className="w-full h-auto"
+                  />
+                </div>
+              ))}
+
+            </div>
+
+          </div>
+
         </div>
 
       </section>
 
 
 
-      {/* FEATURES SECTION */}
-      <section id="features" className="py-20 bg-gray-50 px-6">
-        <h2 className="text-3xl font-bold text-center mb-16">
+      {/* ================= SOCIAL PROOF ================= */}
+      <section className="py-16 bg-white text-center">
+        <h3 className="text-2xl font-semibold mb-4">
+          Helping restaurants increase revenue by 24%+
+        </h3>
+
+        <p className="text-gray-600 max-w-xl mx-auto">
+          “Bitezy reduced our waiting time and improved order accuracy.
+          Customers love the QR system.”
+        </p>
+
+        <p className="mt-4 text-yellow-500 font-semibold">
+          ⭐⭐⭐⭐⭐ 4.8/5 Average Rating
+        </p>
+      </section>
+
+
+      {/* ================= PROBLEM → SOLUTION ================= */}
+      <section className="py-20 bg-gray-50 px-6">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10">
+
+          <div>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">
+              Before Bitezy
+            </h2>
+            <ul className="space-y-3 text-gray-600">
+              <li>❌ Staff shouting in kitchen</li>
+              <li>❌ Long customer waiting time</li>
+              <li>❌ No proper sales data</li>
+              <li>❌ Paying commission to aggregators</li>
+            </ul>
+          </div>
+
+          <div>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6 text-green-600">
+              After Bitezy
+            </h2>
+            <ul className="space-y-3 text-gray-600">
+              <li>✅ Real-time digital order flow</li>
+              <li>✅ Faster table turnover</li>
+              <li>✅ Live revenue analytics</li>
+              <li>✅ 100% payment directly to you</li>
+            </ul>
+          </div>
+
+        </div>
+      </section>
+
+
+      {/* ================= FEATURES ================= */}
+      <section id="features" className="py-20 text-center px-4">
+        <h2 className="text-2xl md:text-3xl font-bold mb-12">
           Everything Your Restaurant Needs
         </h2>
 
-        <div className="grid md:grid-cols-3 gap-12 max-w-7xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto text-gray-600">
 
-          {/* CUSTOMER */}
           <div>
-            <h3 className="text-xl font-semibold mb-4">🍽 Customer Experience</h3>
-            <ul className="text-gray-600 space-y-3">
-              <li>• QR based instant ordering</li>
-              <li>• Category filters for easy browsing</li>
-              <li>• Veg / Non-veg indicators</li>
-              <li>• Bestseller badges</li>
-              <li>• Cross-selling section (People also love)</li>
-              <li>• Packaging option</li>
-              <li>• Notes for chef customization</li>
-              <li>• Live order status tracking</li>
-              <li>• Multiple orders support</li>
-            </ul>
+            <h3 className="font-semibold mb-3">Customer Experience</h3>
+            <p>QR ordering, filters, cross-selling & live order tracking.</p>
           </div>
 
-          {/* KITCHEN */}
           <div>
-            <h3 className="text-xl font-semibold mb-4">👨‍🍳 Kitchen Dashboard</h3>
-            <ul className="text-gray-600 space-y-3">
-              <li>• Real-time new order sound alerts</li>
-              <li>• Accept → Preparing → Ready → Picked Up</li>
-              <li>• Token verification system</li>
-              <li>• Live order timer tracking</li>
-              <li>• Automatic previous order archive</li>
-              <li>• Secure login access</li>
-            </ul>
+            <h3 className="font-semibold mb-3">Kitchen Dashboard</h3>
+            <p>Real-time order alerts with preparation tracking.</p>
           </div>
 
-          {/* ADMIN */}
           <div>
-            <h3 className="text-xl font-semibold mb-4">📊 Owner Analytics</h3>
-            <ul className="text-gray-600 space-y-3">
-              <li>• Total orders & revenue tracking</li>
-              <li>• Unique customer tracking</li>
-              <li>• Best selling items insights</li>
-              <li>• Hour-wise sales charts</li>
-              <li>• Downloadable Excel reports</li>
-              <li>• Menu management control</li>
-              <li>• Stock availability toggle</li>
-            </ul>
+            <h3 className="font-semibold mb-3">Owner Analytics</h3>
+            <p>Revenue insights, peak hour data & Excel exports.</p>
           </div>
 
         </div>
       </section>
 
-      {/* ADVANTAGES SECTION */}
-      <section className="py-20 px-6 text-center">
-        <h2 className="text-3xl font-bold mb-12">
-          Why Restaurants Choose Bitezy
+
+      {/* ================= PRICING ================= */}
+      <section id="pricing" className="py-20 bg-gray-900 text-white text-center px-6">
+        <h2 className="text-2xl md:text-3xl font-bold mb-8">
+          Simple & Transparent Pricing
         </h2>
 
-        <div className="grid md:grid-cols-4 gap-8 max-w-6xl mx-auto">
-          <div>
-            <h3 className="text-lg font-semibold mb-2">⚡ Faster Service</h3>
-            <p className="text-gray-600">Reduce waiting time and increase table turnover.</p>
-          </div>
+        <div className="max-w-xl mx-auto bg-white text-gray-900 rounded-2xl p-8 shadow-2xl">
+          <h3 className="text-xl font-semibold mb-4">Bitezy Plan</h3>
 
-          <div>
-            <h3 className="text-lg font-semibold mb-2">📈 Increase Revenue</h3>
-            <p className="text-gray-600">Cross-selling and upselling built-in.</p>
-          </div>
-
-          <div>
-            <h3 className="text-lg font-semibold mb-2">💳 Zero Commission</h3>
-            <p className="text-gray-600">100% payment goes directly to your account.</p>
-          </div>
-
-          <div>
-            <h3 className="text-lg font-semibold mb-2">📊 Data Driven Decisions</h3>
-            <p className="text-gray-600">Know your peak hours and best items.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* PRICING */}
-      <section id="pricing" className="py-20 bg-gray-900 text-white text-center px-6">
-        <h2 className="text-3xl font-bold mb-8">Simple & Transparent Pricing</h2>
-
-        <div className="max-w-xl mx-auto bg-white text-gray-900 shadow-2xl rounded-2xl p-10">
-          <h3 className="text-2xl font-semibold mb-4">Bitezy Plan</h3>
-
-          <p className="text-4xl font-bold text-green-600 mb-2">
+          <p className="text-3xl font-bold text-green-600 mb-2">
             ₹999<span className="text-lg text-gray-500">/month</span>
           </p>
 
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-600 mb-4">
             ₹1999 one-time setup fee
           </p>
 
-          <ul className="text-gray-600 space-y-2 mb-8">
+          <ul className="text-gray-600 space-y-2 mb-6 text-sm">
             <li>✔ Full Smart Ordering System</li>
             <li>✔ Kitchen + Admin Dashboard</li>
             <li>✔ Analytics & Reports</li>
-            <li>✔ Menu Management</li>
-            <li>✔ No Commission</li>
-            <li>✔ 7-Day free trial</li>
+            <li>✔ 7-Day Free Trial</li>
           </ul>
+
+          <div className="text-xs text-gray-500 mb-6">
+            🔒 Secure Payments • ⚡ Setup in 48 Hours • 📞 Dedicated Support
+          </div>
 
           <a
             href="#contact"
-            className="bg-green-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-green-700 transition"
+            className="bg-green-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-green-700 transition"
           >
             Get Started
           </a>
         </div>
       </section>
 
-      {/* CONTACT */}
-      <section id="contact" className="py-20 px-6 text-center">
-        <h2 className="text-3xl font-bold mb-6">Ready To Make Your Restaurant Smart?</h2>
 
-        <p className="text-gray-600 mb-10">
-          Contact us and we will set up everything for you.
-        </p>
+      {/* ================= FAQ ================= */}
+      <section id="faq" className="py-20 px-6 max-w-4xl mx-auto">
+        <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
+          Frequently Asked Questions
+        </h2>
 
-        <div className="max-w-md mx-auto space-y-4">
-          <input
-            type="text"
-            placeholder="Restaurant Name"
-            className="w-full border border-gray-300 rounded-lg px-4 py-3"
-          />
-          <input
-            type="tel"
-            placeholder="Phone Number"
-            className="w-full border border-gray-300 rounded-lg px-4 py-3"
-          />
-          <button className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition">
-            Submit
-          </button>
+        <div className="space-y-6 text-gray-600">
+          <div>
+            <h3 className="font-semibold">Do I need new hardware?</h3>
+            <p>No. Works on your existing phone, tablet or laptop.</p>
+          </div>
+
+          <div>
+            <h3 className="font-semibold">How do payments work?</h3>
+            <p>Payments go directly to your Razorpay account.</p>
+          </div>
+
+          <div>
+            <h3 className="font-semibold">Can I customize menu anytime?</h3>
+            <p>Yes. You get full admin access to edit items & pricing.</p>
+          </div>
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="bg-gray-900 text-white py-10 text-center">
-        <p className="mb-2">© {new Date().getFullYear()} Bitezyqr. All rights reserved.</p>
-        <p className="text-gray-400 text-sm">
-          Contact: help.bitezy@gmail.com | +91-9516268462
+
+      {/* ================= CONTACT ================= */}
+      <section id="contact" className="py-20 bg-gray-50 text-center px-6">
+        <h2 className="text-2xl md:text-3xl font-bold mb-6">
+          Ready To Digitize Your Restaurant?
+        </h2>
+
+        <div className="max-w-md mx-auto space-y-4">
+
+          <input
+            type="text"
+            placeholder="Restaurant Name"
+            value={restaurantName}
+            onChange={(e) => setRestaurantName(e.target.value)}
+            className="w-full border rounded-lg px-4 py-3"
+          />
+
+          <input
+            type="text"
+            placeholder="Owner Name"
+            value={ownerName}
+            onChange={(e) => setOwnerName(e.target.value)}
+            className="w-full border rounded-lg px-4 py-3"
+          />
+
+          <input
+            type="tel"
+            placeholder="Phone Number"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            className="w-full border rounded-lg px-4 py-3"
+          />
+
+          <button
+            onClick={async () => {
+              setLoading(true);
+              setMessage("");
+
+              const res = await fetch("/api/contact", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  restaurant_name: restaurantName,
+                  owner_name: ownerName,
+                  phone: phone,
+                }),
+              });
+
+              const data = await res.json();
+
+              if (res.ok) {
+                setMessage("✅ Request received! We'll contact you soon.");
+                setRestaurantName("");
+                setOwnerName("");
+                setPhone("");
+              } else {
+                setMessage("❌ Something went wrong. Try again.");
+              }
+
+              setLoading(false);
+            }}
+            className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700"
+          >
+            {loading ? "Submitting..." : "Request Demo"}
+          </button>
+
+          {message && (
+            <p className="text-sm text-gray-600 mt-2">
+              {message}
+            </p>
+          )}
+
+        </div>
+
+      </section>
+
+
+      {/* ================= WHATSAPP BUTTON ================= */}
+      <a
+        href="https://wa.me/919516268462"
+        target="_blank"
+        className="fixed bottom-6 right-6 bg-green-500 text-white px-5 py-3 rounded-full shadow-lg hover:bg-green-600 transition text-sm font-semibold"
+      >
+        💬 Chat on WhatsApp
+      </a>
+
+
+      {/* ================= FOOTER ================= */}
+      <footer className="bg-gray-900 text-white py-8 text-center text-sm">
+        <p>© {new Date().getFullYear()} Bitezyqr. All rights reserved.</p>
+        <p className="text-gray-400 mt-2">
+          help.bitezy@gmail.com | +91-9516268462
         </p>
       </footer>
 
