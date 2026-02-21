@@ -79,10 +79,18 @@ export default function HomePage() {
             Track revenue, monitor orders and understand your business like never before.
           </p>
 
+          <div className="rounded-3xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.15)] border border-gray-200 mb-16">
+            <img
+              src="/mockups/security.png"
+              alt="Admin Dashboard Overview"
+              className="w-full"
+            />
+          </div>
+
           {/* Dashboard Overview */}
           <div className="rounded-3xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.15)] border border-gray-200 mb-16">
             <img
-              src="/mockups/admin-overview.png"
+              src="/mockups/admin1.png"
               alt="Admin Dashboard Overview"
               className="w-full"
             />
@@ -91,11 +99,20 @@ export default function HomePage() {
           {/* Graphs View */}
           <div className="rounded-3xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.15)] border border-gray-200">
             <img
-              src="/mockups/admin-analytics.png"
+              src="/mockups/admin2.png"
               alt="Admin Analytics"
               className="w-full"
             />
           </div>
+
+          <div className="rounded-3xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.15)] border border-gray-200">
+            <img
+              src="/mockups/admin2mm.png"
+              alt="Admin Analytics"
+              className="w-full"
+            />
+          </div>
+
         </div>
 
         {/* ================= KITCHEN ================= */}
@@ -111,7 +128,7 @@ export default function HomePage() {
           {/* Active Orders */}
           <div className="rounded-3xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.15)] border border-gray-200 mb-16 max-w-4xl mx-auto">
             <img
-              src="/mockups/kitchen-active.png"
+              src="/mockups/kitchen1.png"
               alt="Kitchen Active Orders"
               className="w-full"
             />
@@ -120,7 +137,7 @@ export default function HomePage() {
           {/* Empty State */}
           <div className="rounded-3xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.15)] border border-gray-200 max-w-4xl mx-auto">
             <img
-              src="/mockups/kitchen-empty.png"
+              src="/mockups/kitchen2.png"
               alt="Kitchen Empty Dashboard"
               className="w-full"
             />
@@ -137,13 +154,14 @@ export default function HomePage() {
             Smooth QR ordering experience from landing page to order pickup.
           </p>
 
-          <div className="flex gap-10 justify-center overflow-x-auto pb-6">
+          <div className="flex gap-10 justify-center pb-6">
 
             {[
-              "customer-landing.png",
-              "customer-menu.png",
-              "customer-checkout.png",
-              "customer-orders.png",
+              "csx1.jpeg",
+              "csx2.jpeg",
+              "csx3.jpeg",
+              "csx3.1.jpeg",
+              "csx4.jpeg",
             ].map((img, index) => (
               <div
                 key={index}
@@ -268,7 +286,7 @@ export default function HomePage() {
             <li>✔ Analytics & Reports</li>
             <li>✔ Menu Management</li>
             <li>✔ No Commission</li>
-            <li>✔ 7-Day Refund Guarantee</li>
+            <li>✔ 7-Day free trial</li>
           </ul>
 
           <a
@@ -307,9 +325,9 @@ export default function HomePage() {
 
       {/* FOOTER */}
       <footer className="bg-gray-900 text-white py-10 text-center">
-        <p className="mb-2">© {new Date().getFullYear()} Bitezy. All rights reserved.</p>
+        <p className="mb-2">© {new Date().getFullYear()} Bitezyqr. All rights reserved.</p>
         <p className="text-gray-400 text-sm">
-          Contact: support@bitezyqr.in | +91-XXXXXXXXXX
+          Contact: help.bitezy@gmail.com | +91-9516268462
         </p>
       </footer>
 
