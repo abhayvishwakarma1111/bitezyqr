@@ -47,26 +47,28 @@ export default function DashboardLogin() {
                     Dashboard Login
                 </h1>
 
-                <input
-                    type="text"
-                    placeholder="Username"
-                    className="border p-3 w-full mb-4 rounded-xl text-gray-900"
-                    onChange={(e) => setUsername(e.target.value)}
-                />
+                <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
+                    <input
+                        type="text"
+                        placeholder="Username"
+                        className="border p-3 w-full mb-4 rounded-xl text-gray-900"
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
 
-                <input
-                    type="password"
-                    placeholder="Password"
-                    className="border p-3 w-full mb-6 rounded-xl text-gray-900"
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        className="border p-3 w-full mb-6 rounded-xl text-gray-900"
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
 
-                <button
-                    onClick={handleLogin}
-                    className="w-full bg-[#ff5a1f] text-white py-3 rounded-xl"
-                >
-                    Login
-                </button>
+                    <button
+                        type="submit"
+                        className="w-full bg-[#ff5a1f] text-white py-3 rounded-xl"
+                    >
+                        Login
+                    </button>
+                </form>
             </div>
         </div>
     )
