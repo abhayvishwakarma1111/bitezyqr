@@ -86,8 +86,8 @@ export default function KitchenDashboard() {
     const playNewOrderSound = () => {
         if (!audioRef.current) return;
 
-        audioRef.current.currentTime = 0;
-        audioRef.current.play().catch(() => { });
+        audioRef.current.currentTime = 0; 
+        audioRef.current.play().catch(() => { }); 
 
         if (navigator.vibrate) {
             navigator.vibrate([200, 100, 200]);

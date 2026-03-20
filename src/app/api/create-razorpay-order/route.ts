@@ -98,7 +98,7 @@ export async function POST(req: Request) {
 
     if (tokenError) {
       return NextResponse.json({ error: "Token generation failed" }, { status: 500 })
-    }
+    } 
 
     const tokenNumber = tokenData
 
