@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import { useParams, useRouter } from 'next/navigation'
-import { formatTimeIST } from '@/lib/time'
+import { formatTimeIST, getISTDateKey } from '@/lib/time'
 import { useRef } from 'react';
 
 
@@ -106,7 +106,7 @@ export default function KitchenDashboard() {
       `)
             .eq('restaurant_id', restaurantId)
             .eq('payment_status', 'PAID')
-            .order('created_at', { ascending: true })
+            .order('created_at', { ascending: false })
 
         if (!data) return
 
@@ -114,9 +114,14 @@ export default function KitchenDashboard() {
             data.filter(order => order.status !== 'PICKED_UP')
         )
 
-        setCompletedOrders(
-            data.filter(order => order.status === 'PICKED_UP')
-        )
+        const todayKey = getISTDateKey(new Date().toISOString()) // today in IST
+
+setCompletedOrders(
+  data.filter(order =>
+    order.status === 'PICKED_UP' &&
+    getISTDateKey(order.created_at) === todayKey
+  )
+)
     }
 
     useEffect(() => {
